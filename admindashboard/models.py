@@ -70,6 +70,8 @@ class Program(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
+    objects = models.Manager()
+
     class Meta:
         db_table = 'program'
     
@@ -84,10 +86,12 @@ class Module(models.Model):
         verbose_name ='ID'
         )
     name = models.CharField(max_length=255)
-    # program_id = models.IntegerField(blank=True, null=True)
+    # program_id = models.ManyToManyField(Program, through='ProgramModule')
     program = models.ForeignKey(Program, on_delete=models.CASCADE, blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'module'
@@ -115,6 +119,8 @@ class Content(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
+    objects = models.Manager()
+
     class Meta:
         db_table = 'content'
 
@@ -136,6 +142,8 @@ class ModuleContent(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
     content = models.ForeignKey(Content, on_delete=models.CASCADE)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'module_content'
@@ -184,6 +192,8 @@ class ProgramModule(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
     module = models.ForeignKey(Module, on_delete=models.CASCADE)
+
+    objects = models.Manager()
 
     class Meta:
         db_table = 'program_module'

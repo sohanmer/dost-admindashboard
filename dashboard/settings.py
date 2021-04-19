@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'admindashboard',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -84,13 +85,13 @@ DATABASES = {
 
         'NAME': 'rp-ivr',
 
-        'USER': 'adminboard',
+        'USER': 'postgres',
 
-        'PASSWORD': 'adminboard',
+        'PASSWORD': '1811',
 
         'HOST': '127.0.0.1',
 
-        'PORT': '5432',
+        'PORT': '5433',
 
     }
 }
@@ -113,6 +114,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
+                        "django_excel.TemporaryExcelFileUploadHandler")
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -130,5 +134,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+
+IMPORT_EXPORT_USE_TRANSACTION = True
 
 STATIC_URL = '/static/'
