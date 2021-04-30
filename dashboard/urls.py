@@ -18,7 +18,8 @@ Including another URLconf
 """
 
 urlpatterns = [
-    path('import_form/', include('admindashboard.urls')),
+    path('import/', include('admindashboard.urls')),
+    path('export/', include('admindashboard.urls')),
     path('', admin.site.urls),
 ]
 

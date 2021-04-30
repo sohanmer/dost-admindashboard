@@ -1,0 +1,23 @@
+{% extends 'admin/change_list.html' %}
+
+{% block content %}
+<div>
+    <form action="/import/add_ivr_prompt/" method="POST" enctype="multipart/form-data" class="d-inline">
+        {% csrf_token %}
+        <label>Import:</label>
+        <input name="import_form_prompt" type="file"  class="form-control d-inline w-25" required/>
+        <button type="submit" class="btn btn-secondary">Import</button>
+    </form>
+    <form action="/export/ivrprompt_format/" method="POST" class="d-inline px-4">
+        {% csrf_token %}
+        <select name="format" id="format_type" class="form-select d-inline w-25 h-auto">
+            <option value="0" selected>Select a format</option>
+            <option value="1">Sample(Add New IvrPrompt)</option>
+            <option value="2">Sample(Update IvrPrompt)</option>
+        </select>
+        <button type="submit" class="btn btn-secondary">Download</button>
+    </form>
+</div>
+{{ block.super }}
+
+{% endblock %}

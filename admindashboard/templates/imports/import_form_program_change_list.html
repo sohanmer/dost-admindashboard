@@ -1,0 +1,24 @@
+{% extends 'admin/change_list.html' %}
+
+{% block content %}
+<div {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+<div>
+    <form action="/import/add_program/" method="POST" enctype="multipart/form-data" class="d-inline">
+        {% csrf_token %}
+        <label>Import your excel file:</label>
+        <input name="import_form_program" class="form-control d-inline w-25" type="file" required/>
+        <button type="submit" class="btn btn-secondary">Import</button>
+    </form>
+    <form action="/export/program_format/" method="POST" class="d-inline px-4">
+        {% csrf_token %}
+        <select name="format" id="format_type" class="form-select d-inline w-25 h-auto">
+            <option value="0" selected>Select a format</option>
+            <option value="1">Sample(Add New Program)</option>
+            <option value="2">Sample(Update Program)</option>
+        </select>
+        <button type="submit" class="btn btn-secondary">Download</button>
+    </form>
+</div>
+{{ block.super }}
+
+{% endblock %}

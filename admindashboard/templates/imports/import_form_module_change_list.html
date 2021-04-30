@@ -1,0 +1,23 @@
+{% extends 'admin/change_list.html' %}
+
+{% block content %}
+<div class="pt-3">
+    <form action="/import/add_module/" method="POST" enctype="multipart/form-data" class="d-inline">
+        {% csrf_token %}
+        <label>Import:</label>
+        <input name="import_form_module" class="form-control d-inline w-25" type="file" required/>
+        <button type="submit" class="btn btn-secondary d-inline">Import</button>
+    </form>
+    <form action="/export/module_format/" method="POST" class="d-inline px-4">
+        {% csrf_token %}
+        <select name="format" id="format_type" class="form-select d-inline w-25 h-auto">
+            <option value="0" selected>Select a format</option>
+            <option value="1">Sample(Add New Module)</option>
+            <option value="2">Sample(Update Module)</option>
+        </select>
+        <button type="submit" class="btn btn-secondary">Download</button>
+    </form>
+</div>
+{{ block.super }}
+
+{% endblock %}

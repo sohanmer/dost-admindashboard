@@ -1,51 +1,6 @@
 from django.contrib import admin
 from .models import Partner, User, Program, Module, Content, ModuleContent, ProgramModule, Registration, SystemPhone, PartnerSystemPhone, IvrPrompt, IvrPromptResponse
-from import_export import resources
-from import_export.admin import ImportExportModelAdmin, ExportActionMixin
-from import_export import fields, resources
-from import_export.widgets import ForeignKeyWidget, ManyToManyWidget
-
-
-class ModuleResource(resources.ModelResource):
-    
-    class Meta:
-        model = Module
-        skip_unchanged = True
-        report_skipped = True
-        use_transaction = True
-        import_fields = ('name', 'program')
-        import_id_fields = ('name',)    
-    
-class ContentResource(resources.ModelResource):
-
-    class Meta:
-        model = Content
-        exclude = ('id','created_on', 'updated_on',)
-        import_id_fields = ('name',)
-
-class IvrPromotResource(resources.ModelResource):
-
-    class Meta:
-        model = IvrPrompt
-        exclude = ('id',)
-
-class ProgramResource(resources.ModelResource):
-
-    class Meta:
-        model = Program
-        exclude = ('id',)
-
-class ProgramModuleResource(resources.ModelResource):
-    id = fields.Field(column_name="module_id")
-
-    class Meta:
-        model = ProgramModule
-        skip_unchanged = True
-        report_skipped = True
-        use_transaction = True
-        import_fields = ('module_id', 'program')
-        import_id_fields = ('id',)
-        
+from django import forms
 
 class PartnerAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'email',)
@@ -55,22 +10,25 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'phone', 'address_line_1', 'address_line_2', 'postal_code', 'city', 'district', 'state', 'partner_id',)
 admin.site.register(User, UserAdmin)
 
-class ProgramAdmin(ImportExportModelAdmin):
+class ProgramAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'description', 'status', 'start_date', 'discontinuation_date', 'program_type',)
     list_filter = ('status', 'start_date', 'discontinuation_date', 'program_type',)
+    change_list_template = 'imports/import_form_program_change_list.html'
+
 admin.site.register(Program, ProgramAdmin)
 
 class ModuleAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'program_id',)
     list_filter = ('program_id',)
-    change_list_template = 'imports/import_form_change_list.html'
-    resource_class = ModuleResource
+    change_list_template = 'imports/import_form_module_change_list.html'    
+
 admin.site.register(Module, ModuleAdmin)
 
-class ContentAdmin(ImportExportModelAdmin):
+class ContentAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'duration', 'status',)
     list_filter = ('duration', 'status',)
-    resource_class = ContentResource
+    change_list_template = 'imports/import_form_content_change_list.html'
+
 admin.site.register(Content, ContentAdmin)
 
 # admin.site.register(ModuleContent)
@@ -80,9 +38,8 @@ class ModuleContentAdmin(admin.ModelAdmin):
 admin.site.register(ModuleContent, ModuleContentAdmin)
 
 # admin.site.register(ProgramModule)
-class ProgramModuleAdmin(ImportExportModelAdmin):
+class ProgramModuleAdmin(admin.ModelAdmin):
     list_display = ('id', 'program_id', 'module_id', 'sequence',)
-    resource_class = ProgramModuleResource
 admin.site.register(ProgramModule, ProgramModuleAdmin)
 
 # admin.site.register(Registration)
@@ -101,9 +58,10 @@ class PartnerSystemPhoneAdmin(admin.ModelAdmin):
 admin.site.register(PartnerSystemPhone, PartnerSystemPhoneAdmin)
 
 # admin.site.register(IvrPrompt)
-class IvrPromptAdmin(ImportExportModelAdmin):
+class IvrPromptAdmin(admin.ModelAdmin):
     list_display = ('id', 'content_id', 'prompt_name', 'prompt_question', 'possible_response', 'status',)
     list_filter = ('content_id', 'prompt_name', 'prompt_question', 'status',)
+    change_list_template = 'imports/import_form_prompt_change_list.html'
 admin.site.register(IvrPrompt, IvrPromptAdmin)
 
 # admin.site.register(IvrPromptResponse)

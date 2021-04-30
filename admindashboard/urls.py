@@ -19,7 +19,22 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    path('', views.upload, name='upload'),
+    path('add_program/', views.add_program, name = 'add_program'),
+    path('add_module/', views.add_module, name = 'add_module'),
+    path('add_content/', views.add_content, name = 'add_content'),
+    path('add_ivr_prompt/', views.add_ivr_prompt, name = "add_ivr_prompt"),
+    path('program_format/', views.program_format, name = 'program_format'),
+    path('module_format/', views.module_format, name = 'module_format'),
+    path('content_format/', views.content_format, name = 'content_format'),
+    # path('program_insert_sample/', views.export_program_insert_sample, name = "export_program_insert_sample"),
+    # path('program_update_sample/', views.export_program_update_sample, name = "export_program_update_sample"),
+    # path('module_insert_sample/', views.export_module_insert_sample, name = "export_module_insert_sample"),
+    # path('module_update_sample/', views.export_module_update_sample, name = "export_module_update_sample"),
+    # path('content_sample_without_module/', views.export_content_sample_wihtout_module, name = "export_content_sample"),
+    # path('content_sample_with_module/', views.export_content_sample_with_module, name = "export_content_sample"),
+    path('ivrprompt_format/', views.ivrprompt_format, name = 'ivrprompt_format'),
+    # path('ivrprompt_insert_sample/', views.export_ivrprompt_insert_sample, name = "export_ivrprompt_insert_sample"),
+    # path('ivrprompt_update_sample/', views.export_ivrprompt_update_sample, name = "export_ivrprompt_update_sample")
 ]
 
 admin.site.site_header = "Dost Admin"
