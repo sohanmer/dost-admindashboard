@@ -82,15 +82,15 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': 'rp-ivr',
+        'NAME': 'rp_ivr',
 
-        'USER': 'postgres',
+        'USER': 'adminboard',
 
-        'PASSWORD': '1811',
+        'PASSWORD': '18111811',
 
         'HOST': '127.0.0.1',
 
-        'PORT': '5433',
+        'PORT': '5432',
 
     }
 }

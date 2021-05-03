@@ -5,7 +5,7 @@
     <form action="/import/add_ivr_prompt/" method="POST" enctype="multipart/form-data" class="d-inline">
         {% csrf_token %}
         <label>Import:</label>
-        <input name="import_form_prompt" type="file"  class="form-control d-inline w-25" required/>
+        <input name="import_form_ivrprompt" type="file"  class="form-control d-inline w-25" required/>
         <button type="submit" class="btn btn-secondary">Import</button>
     </form>
     <form action="/export/ivrprompt_format/" method="POST" class="d-inline px-4">
