@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Partner, User, Program, Module, Content, ModuleContent, ProgramModule, Registration, SystemPhone, PartnerSystemPhone, IvrPrompt, IvrPromptResponse
+from .models import Partner, User, Program, Module, Content, ModuleContent, ProgramModule, Registration, SystemPhone, PartnerSystemPhone, IvrPrompt, IvrPromptResponse, CallLog, CallbackTracker, UserModuleContent, UserProgram, CallLogEvent, IvrPromptMapping, KookooCallLog, UserCustomField, UserGroup
 from django import forms
 
 class PartnerAdmin(admin.ModelAdmin):
@@ -69,3 +69,34 @@ class IvrPromptResponseAdmin(admin.ModelAdmin):
     list_display = ('id', 'user_phone', 'content_id', 'prompt_name', 'prompt_question', 'response', 'is_call_log_processed', 'call_sid', 'call_log_id',)
 admin.site.register(IvrPromptResponse, IvrPromptResponseAdmin)
 
+class CallLogAdmin(admin.ModelAdmin):
+    list_display = ('id', 'call_sid', 'flow_run_uuid', 'call_type', 'user_phone_number', 'system_phone_number', )
+admin.site.register(CallLog, CallLogAdmin)
+
+class CallbackTrackerAdmin(admin.ModelAdmin):
+    list_display = ('id', 'missed_call_log', 'response_call_log',)
+admin.site.register(CallbackTracker, CallbackTrackerAdmin)
+
+class UserModuleContentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user_program_id', 'program_module_id',)
+admin.site.register(UserModuleContent, UserModuleContentAdmin)
+
+class CallLogEventAdmin(admin.ModelAdmin):
+    list_display = ('id', 'telco_code', 'call_sid', 'account_sid', 'from_number', 'to_number', 'call_status', 'dial_time', 'pick_time', 'end_time', 'duration', )
+admin.site.register(CallLogEvent, CallLogEventAdmin)
+
+class IvrPromptMappingAdmin(admin.ModelAdmin):
+    list_display = ('id', 'mapped_table_name', 'mapped_table_column_name', 'default_value', )
+admin.site.register(IvrPromptMapping, IvrPromptMappingAdmin)
+
+class KookooCallLogAdmin(admin.ModelAdmin):
+    list_display = ('id', 'event_call_sid', 'log_session_id', 'log_called_id', 'log_date', 'log_time', 'log_message', 'event_created_on', )
+admin.site.register(KookooCallLog, KookooCallLogAdmin)
+
+class UserCustomFieldAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user_id', 'registration_id', 'user_phone', 'flow_run_uuid', 'field_name', 'field_value', )
+admin.site.register(UserCustomField, UserCustomFieldAdmin)
+
+class UserGroupAdmin(admin.ModelAdmin):
+    list_display = ('id',  'user_phone', 'user_id', 'registration_id', 'group_name', 'group_uuid', 'status', )
+admin.site.register(UserGroup, UserGroupAdmin)

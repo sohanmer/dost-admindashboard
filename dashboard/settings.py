@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'dashboard.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
+        'NAME': 'rp_ivr_staging',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'db',

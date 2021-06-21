@@ -447,6 +447,7 @@ class IvrPrompt(models.Model):
     )
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
+
     class Meta:
         db_table = 'ivr_prompt'
 
@@ -476,4 +477,117 @@ class IvrPromptResponse(models.Model):
 
     def __str__(self):
         return self.prompt_name
+
+class CallLogEvent(models.Model):
+    id = models.AutoField(
+        auto_created = True,
+        primary_key = True,
+        serialize = False,
+        verbose_name ='ID'
+        )
+    telco_code = models.CharField(max_length=255, blank=True, null=True)
+    call_sid = models.CharField(max_length=255, blank=True, null=True)
+    account_sid = models.CharField(max_length=255, blank=True, null=True)
+    from_number = models.CharField(max_length=255, blank=True, null=True)
+    to_number = models.CharField(max_length=255, blank=True, null=True)
+    call_status = models.CharField(max_length=255, blank=True, null=True)
+    direction = models.CharField(max_length=255, blank=True, null=True)
+    parent_call_sid = models.CharField(max_length=255, blank=True, null=True)
+    telco_status = models.CharField(max_length=255, blank=True, null=True)
+    duration = models.CharField(max_length=255, blank=True, null=True)
+    dial_time = models.DateField(blank=True, null=True)
+    pick_time =  models.DateField(blank=True, null=True)
+    end_time =  models.DateField(blank=True, null=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
     
+    class Meta:
+        db_table = 'call_log_event'
+
+    def __str__(self):
+        return self.telco_code
+
+class IvrPromptMapping(models.Model):
+    id = models.AutoField(
+        auto_created = True,
+        primary_key = True,
+        serialize = False,
+        verbose_name ='ID'
+        )
+    ivr_prompt = models.ForeignKey(IvrPrompt, on_delete=models.CASCADE)
+    mapped_table_name = models.CharField(max_length=255, blank=True, null=True)
+    mapped_table_column_name = models.CharField(max_length=255, blank=True, null=True)
+    default_value = models.CharField(max_length=255, blank=True, null=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'ivr_prompt_mapping'
+
+    def __str__(self):
+        return f'{self.ivr_prompt.prompt_name}'
+
+class KookooCallLog(models.Model):
+    id = models.AutoField(
+        auto_created = True,
+        primary_key = True,
+        serialize = False,
+        verbose_name ='ID'   
+        )
+    event_call_sid = models.CharField(max_length=255, blank=True, null=True)
+    log_session_id = models.CharField(max_length=255, blank=True, null=True)
+    log_called_id = models.CharField(max_length=255, blank=True, null=True)
+    log_date = models.CharField(max_length=255, blank=True, null=True)
+    log_time = models.CharField(max_length=255, blank=True, null=True)
+    log_message = models.TextField(blank=True, null=True)
+    event_created_on = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        db_table = 'kookoo_call_log'
+    
+    def _str_(self):
+        return self.event_call_sid
+
+class UserCustomField(models.Model):
+    id = models.AutoField(
+        auto_created = True,
+        primary_key = True,
+        serialize = False,
+        verbose_name ='ID'   
+        )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    registration = models.ForeignKey(Registration, on_delete=models.CASCADE)
+    user_phone = models.CharField(max_length=255, blank=True, null=True)
+    flow_run_uuid = models.CharField(max_length=255, blank=True, null=True)
+    field_name = models.CharField(max_length=255, blank=True, null=True)
+    field_value = models.TextField(blank=True, null=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'user_custom_fields'
+    
+    def _str_(self):
+        return f'{self.user.name}'
+
+class UserGroup(models.Model):
+    id = models.AutoField(
+        auto_created = True,
+        primary_key = True,
+        serialize = False,
+        verbose_name ='ID'   
+        )
+    user_phone = models.CharField(max_length=255, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    registration = models.ForeignKey(Registration, on_delete=models.CASCADE) 
+    group_name = models.CharField(max_length=255, blank=True, null=True)
+    group_uuid = models.CharField(max_length=255, blank=True, null=True)
+    status = models.CharField(max_length=50, blank=True, null=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'user_group'
+    
+    def _str_(self):
+        return f'{self.user.name}'
